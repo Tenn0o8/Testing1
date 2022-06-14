@@ -2,14 +2,248 @@
 <html lang="en">
 <head>
      <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
+     <title>JS Drum Kit</title>
+     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+     <div class="keys">
+     <div data-key="82" class="key">
+     <kbd>R</kbd>
+     <span class="sound">Rock</span>
+     </div>
+     <div data-key="80" class="key">
+     <kbd>P</kbd>
+     <span class="sound">Paper</span>
+     </div>
+     <div data-key="83" class="key">
+     <kbd>S</kbd>
+     <span class="sound">Scissors</span>
+     </div>
+     </div>
+
+     <div>
+          <h1   class="yourPoints">It's yourPoints</h1>
+          <h1   class="comPoints">It's comPoints</h1>
+          <h1   class="Round">It's round</h1>
+
+     </div>
+     
+     <!-- <div data-key="70" class="key">
+     <kbd>F</kbd>
+     <span class="sound">openhat</span>
+     </div>
+     <div data-key="71" class="key">
+     <kbd>G</kbd>
+     <span class="sound">boom</span>
+     </div>
+     <div data-key="72" class="key">
+     <kbd>H</kbd>
+     <span class="sound">ride</span>
+     </div>
+     <div data-key="74" class="key">
+     <kbd>J</kbd>
+     <span class="sound">snare</span>
+     </div>
+     <div data-key="75" class="key">
+     <kbd>K</kbd>
+     <span class="sound">tom</span>
+     </div>
+     <div data-key="76" class="key">
+     <kbd>L</kbd>
+     <span class="sound">tink</span>
+     </div> -->
+     
+<!-- 
+     <audio data-key="82" src="sounds/clap.wav"></audio>
+     <audio data-key="83" src="sounds/clap.wav"></audio>
+     <audio data-key="80" src="sounds/clap.wav"></audio> -->
+
+
+
+     <!-- <audio data-key="65" src="sounds/clap.wav"></audio>
+     <audio data-key="83" src="sounds/hihat.wav"></audio>
+     <audio data-key="68" src="sounds/kick.wav"></audio>
+     <audio data-key="70" src="sounds/openhat.wav"></audio>
+     <audio data-key="71" src="sounds/boom.wav"></audio>
+     <audio data-key="72" src="sounds/ride.wav"></audio>
+     <audio data-key="74" src="sounds/snare.wav"></audio>
+     <audio data-key="75" src="sounds/tom.wav"></audio>
+     <audio data-key="76" src="sounds/tink.wav"></audio> -->
+
+<!-- <script>
+     function removeTransition(e) {
+     if (e.propertyName !== 'transform') return;
+     e.target.classList.remove('playing');
+     }
+
+     function playSound(e) {
+     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+     const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+     if (!audio) return;
+
+     key.classList.add('playing');
+     audio.currentTime = 0;
+     audio.play();
+     }
+
+     const keys = Array.from(document.querySelectorAll('.key'));
+     keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+     window.addEventListener('keydown', playSound);
+</script> -->
+
+<!-- <script src="RockPaperSci.js"></script> -->
+
+
+
+<script>
+
+     let name = prompt("Please enter your name!");     //it's must be var to use it in game func
+     let yourPoints = 0;
+     let comPoints = 0;
+     let round = 1;
+
+
+     // this's to make the button glowing and turning on the audio
+     function removeTransition(e) 
+     {
+          if (e.propertyName !== 'transform') return;
+          e.target.classList.remove('playing');
+     }
+     const keys = Array.from(document.querySelectorAll('.key'));
+     keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+     function playSound(e) 
+     {
+          // const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+          const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+          // if (!audio) return;
+          if(!key)  return;
+          key.classList.add('playing');
+          // audio.currentTime = 0;
+          // audio.play();
+
+     }
+     
+     
+     //return the choice of computer
+     function comChoice()
+     {
+          let a = (Math.floor(Math.random() * 10))%3;
+          if (a==0) return "Rock";
+          else if(a==1) return "Paper";
+          else if(a==2) return "Scissors";
+     }
+
+     //compare func
+     function compare(choice1,choice2)
+          {
+               
+               //so sanh va dua ra ket qua
+               // 1 la ban win, -1 la com win,0 la hoa
+               
+               if(choice1=="Rock"&&choice2=="Paper")   return -1;
+               else if(choice1=="Rock"&&choice2=="Scissors")     return 1;
+               else if(choice1 == "Paper" && choice2 == "Rock")  return 1;
+               else if(choice1 == "Paper" && choice2 == "Scissors")  return -1;
+               else if(choice1 == "Scissors" && choice2 == "Rock")  return -1;
+               else if(choice1 == "Scissors" && choice2 == "Paper")  return -1;
+               else return 0;
+
+          }
+
+
+
+     function game(e,name,yourPoints,comPoints,round)
+     {
+          // if it's not RPS dont play the game
+          const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+          if(!key)  return    [yourPoints,comPoints,round];
+
+
+          if(round==0){
+          console.log("Game's begin!");
+          }
+          const h11 = document.querySelector('body > div:nth-child(2) > h1.yourPoints');
+          const h12 = document.querySelector('body > div:nth-child(2) > h1.comPoints');
+          const h13 = document.querySelector('body > div:nth-child(2) > h1.Round');
+          
+          // choice1 is your choice
+          let choice1 = "";
+          if(e.keyCode == 82)  choice1 = "Rock";
+          if(e.keyCode == 80)  choice1 = "Paper";
+          if(e.keyCode == 83)  choice1 = "Scissors"; 
+
+          // choice2 is comchoice
+          let choice2 = "";
+          choice2 = comChoice();
+
+          let a = compare(choice1,choice2);
+                    
+          if(a==1)  
+          {
+               yourPoints+=1;
+               h11.textContent = `${name}'s Points: ${yourPoints}`;
+               h12.textContent = `Com Points: ${comPoints}`;
+               console.log(name+" win round "+round);
+               round++;
+               h13.textContent = `Round: ${round}`;
+          }
+          else if(a==0)  
+          {
+               console.log("Draw on round "+round);
+               round++;
+               h11.textContent = `${name}'s Points: ${yourPoints}`;
+               h12.textContent = `Com Points: ${comPoints}`;
+               h13.textContent = `Round: ${round}`;
+
+          }
+          else if(a==-1) 
+          {
+               comPoints+=1;
+               h11.textContent = `${name}'s Points: ${yourPoints}`;
+               h12.textContent = `Com Points: ${comPoints}`;
+               console.log("Com wins round " + round);
+               round++;
+               h13.textContent = `Round: ${round}`;
+          }
+          
+
+          // if it's the last round
+          if(round==5)
+          {
+               if(yourPoints>comPoints) console.log(`${name} win the hold game!`);
+               else if(yourPoints == comPoints)   console.log("Draw! Play another game!");
+               else console.log("Com wins the hold game!");
+               return [0,0,0];     //reset game
+
+          }
+          else if(round<5&&yourPoints==3)
+          {
+               console.log(`${name} win the hold game!`);
+               return [0,0,0];        //reset game
+          }
+          else if(round<5&&comPoints==3)
+          {
+               console.log(`Com wins the hold game!`); 
+               return [0,0,0];        //reset game
+          }
+          
+          return [yourPoints,comPoints,round];
+     }
      
 
+     
+     
+     window.addEventListener('keydown', playSound);
+     // if you want to pass more parameter to func in addEventListner
+     window.addEventListener('keydown', function(e){
+          [yourPoints,comPoints,round] = game(e,name,yourPoints,comPoints,round);
+     });              
+     
+     
+</script>
 
-     <script src="RockPaperSci.js"></script>
+
+
 </body>
 </html>

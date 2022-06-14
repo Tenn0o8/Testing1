@@ -1,15 +1,12 @@
 function comChoice()
+{
+     let a = (Math.floor(Math.random() * 10))%3;
+     if (a==0) return "Rock";
+     else if(a==1) return "Paper";
+     else if(a==2) return "Scissors";
+}
+function compare(choice1,choice2)
           {
-               let a = (Math.floor(Math.random() * 10))%3;
-               if (a==0) return "Rock";
-               else if(a==1) return "Paper";
-               else if(a==2) return "Scissors";
-          }
-          function compare(choice1,choice2)
-          {
-
-
-
                //Chuan hoa choice 1
                if(choice1.match(/rock/i))  choice1 = "Rock";
                if(choice1.match(/paper/i))  choice1 = "Paper";
